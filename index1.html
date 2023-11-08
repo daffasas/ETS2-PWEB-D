@@ -1,0 +1,100 @@
+<!-- DAFFA SASKARA 5025211249 --><!-- DAFFA SASKARA 5025211249 -->
+<!-- DAFFA SASKARA 5025211249 --><!-- DAFFA SASKARA 5025211249 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokemon</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .box {
+      width: calc(25% - 20px);
+      margin: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      background-color: #fff;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    .name {
+      font-weight: bold;
+      margin: 8px 0;
+    }
+    .details-button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    @media screen and (min-width: 1000px) {
+      /* 4 rows when window width is more than 1000px */
+      .box {
+        width: calc(20% - 20px);
+      }
+    }
+    @media screen and (max-width: 1000px) {
+      .container {
+        flex-wrap: wrap;
+      }
+      .box {
+        width: calc(30% - 20px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="pokemon-container"></div>
+
+  <script>
+    async function fetchPokemonData() {
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon/');
+      const data = await response.json();
+
+      const pokemonContainer = document.getElementById('pokemon-container');
+      pokemonContainer.innerHTML = '';
+
+      data.results.forEach((pokemon) => {
+        const box = document.createElement('div');
+        box.className = 'box';
+
+        const name = document.createElement('div');
+        name.className = 'name';
+        name.innerText = pokemon.name;
+
+        const detailsButton = document.createElement('button');
+        detailsButton.className = 'details-button';
+        detailsButton.innerText = 'Details';
+
+        // Add an event listener to open the URL when the button is clicked
+        detailsButton.addEventListener('click', () => {
+          window.location.href = pokemon.url;
+        });
+
+        box.appendChild(name);
+        box.appendChild(detailsButton);
+        pokemonContainer.appendChild(box);
+      });
+    }
+
+    fetchPokemonData();
+  </script>
+</body>
+</html>
